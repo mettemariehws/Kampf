@@ -1,0 +1,44 @@
+{
+  "name": "kampf",
+  "version": "1.0.0",
+  "description": "Exam project",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js",
+    "start-dev": "cross-env PORT=3000 nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mettemariehws/Kampf.git"
+  },
+  "keywords": [
+    "Exam",
+    "Football",
+    "Calendar",
+    "matc"
+  ],
+  "author": "Mette Marie Harder",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mettemariehws/Kampf/issues"
+  },
+  "homepage": "https://github.com/mettemariehws/Kampf#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "express-rate-limit": "^6.4.0",
+    "express-router": "^0.0.1",
+    "express-session": "^1.17.2",
+    "helmet": "^5.0.2",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.16",
+    "sqlite": "^4.1.1",
+    "sqlite3": "^5.0.8"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
+}
