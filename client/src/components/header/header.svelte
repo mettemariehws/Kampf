@@ -9,7 +9,7 @@
         <p class="logo">KAMPF</p>
       </div>
       <Link to="/vedikkeendnu">Tilføj spiller</Link>
-      <Link to="/login">LOG UD</Link>
+      <Link to="/vedhellerikkeendnu">LOG UD</Link>
     </nav>
   </Router>
   

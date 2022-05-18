@@ -1,17 +1,13 @@
 <script>
 	import {Router, Route} from "svelte-navigator";
 	import Login from "./pages/login/login.svelte";
-	import Header from "./components/header/header.svelte";
+	import TrainerPage from "./pages/trainerfrontpage/admin.svelte"
 </script>
 
 <main>
-	<Header/>
-
 	<Router>
-		<Route path="/login" component={Login}/>
+		<Route path="/" component={Login} />
+		<Route path="/trainerpage" component={TrainerPage} />
 	</Router>
-</main>
 
-<style>
-	
-</style>
+</main>
