@@ -9,5 +9,4 @@
 		<Route path="/" component={Login} />
 		<Route path="/trainerpage" component={TrainerPage} />
 	</Router>
-
 </main>

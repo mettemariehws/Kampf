@@ -1,6 +1,6 @@
 <script>
 
-  import {navigate} from "svelte-navigator";
+  import {Router, Link, navigate} from "svelte-navigator";
 
   let user = {};
   let errormessage = "";
@@ -22,7 +22,6 @@
   }
 
 </script>
-
 <form action="action_page.php" method="post">
     <div class="imgcontainer">
       <img src="logo.png" alt="Avatar" class="avatar">
@@ -36,14 +35,13 @@
       <label for="psw"><b>Password</b></label>
       <input type="password" placeholder="Enter Password" name="psw" required>
   
-      <button type="submit">Login</button>
+      <button type="login" on:click={login()}>Login</button>
       <span class=cancelbtn> <a href="/">Cancel</a></span>
       <label>
         <input type="checkbox" checked="checked" name="remember" class="rememberme"> Remember me
       </label>
     </div>
   </form>
-
   <style>
 
 form {

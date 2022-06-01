@@ -12,13 +12,7 @@ await db.exec(`CREATE TABLE IF NOT EXISTS players (
     playerno INT(16),
     name VARCHAR(30),
     password VARCHAR(30)
-)`)
-
-await db.exec(`CREATE TABLE IF NOT EXISTS trainers (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    trainer no. INT(16),
-    name VARCHAR(30),
-    password VARCHAR(30)
+    role VARCHAR(10)
 )`)
 
 db.close();
