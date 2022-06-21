@@ -6,7 +6,7 @@
 
 <main>
 	<Router>
-		<Route path="/" component={Login} />
-		<Route path="/trainerpage" component={TrainerPage} />
+		<Route path="/" component={TrainerPage} />
+		<Route path="/trainerpage" component={Login} />
 	</Router>
 </main>

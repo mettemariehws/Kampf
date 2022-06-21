@@ -1,6 +1,6 @@
 <script>
 
-  import {Router, Link, navigate} from "svelte-navigator";
+  import {navigate} from "svelte-navigator";
 
   let user = {};
   let errormessage = "";
@@ -13,35 +13,36 @@
       method: "POST",
       body: JSON.stringify(user),
     });
+    console.log("efter fetch")
     if(info.status === 200){
-      console.log("wuhu, det er perfekt");
       navigate("/trainerpage")
     }else{
-      console.log("det er ikke de rigtige credentials");
+      console.log("Det er ikke de rigtige credentials");
     }
   }
 
 </script>
-<form action="action_page.php" method="post">
+<form class="login-form" method="post">
     <div class="imgcontainer">
-      <img src="logo.png" alt="Avatar" class="avatar">
+      <img src="img/logo.png" alt="Avatar" class="avatar">
       <h2 class="welcometext">Welcome! Log into your game overview on Kampf below</h2>
     </div>
   
     <div class="container">
       <label for="uname"><b>Playerno</b></label>
-      <input type="text" placeholder="Enter Playerno" name="uname" required>
+      <input type="text" placeholder="Enter Playerno" name="uname" required bind:value={user.no}>
   
       <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
+      <input type="password" placeholder="Enter Password" name="psw" required bind:value={user.password}>
   
-      <button type="login" on:click={login()}>Login</button>
+      <button type="login" on:click={() => login()}>Login</button>
       <span class=cancelbtn> <a href="/">Cancel</a></span>
       <label>
         <input type="checkbox" checked="checked" name="remember" class="rememberme"> Remember me
       </label>
     </div>
   </form>
+
   <style>
 
 form {
@@ -58,8 +59,8 @@ input[type=text], input[type=password] {
 }
 
 .welcometext {
-  color: #f44336;
-  font-family: papyrus;
+  color: #a5352d;
+  font-family: sans-serif;
 }
 
 button {
