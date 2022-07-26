@@ -1,26 +1,29 @@
 <script>
-
-  import {navigate} from "svelte-navigator";
+  import { useNavigate } from "svelte-navigator";
+  const navigate = useNavigate();
 
   let user = {};
-  let errormessage = "";
+  let responseMessage = {}; 
 
   async function login(){
-    const info = await fetch(`/api/login`, {
+    console.log(user)
+    const info = await fetch("http://localhost:3000/api/login", {
       headers: {
         "content-type": "application/json",
       },
       method: "POST",
       body: JSON.stringify(user),
     });
-    console.log("efter fetch")
+
+    responseMessage = await info.json();
     if(info.status === 200){
-      navigate("/trainerpage")
+      localStorage.setItem("user", responseMessage.loginUser);
+      navigate("/userprofile", {replace : true});
     }else{
       console.log("Det er ikke de rigtige credentials");
     }
-  }
 
+  }
 </script>
 <form class="login-form" method="post">
     <div class="imgcontainer">
@@ -35,7 +38,7 @@
       <label for="psw"><b>Password</b></label>
       <input type="password" placeholder="Enter Password" name="psw" required bind:value={user.password}>
   
-      <button type="login" on:click={() => login()}>Login</button>
+      <button type="login" on:click={login}>Login</button>
       <span class=cancelbtn> <a href="/">Cancel</a></span>
       <label>
         <input type="checkbox" checked="checked" name="remember" class="rememberme"> Remember me
