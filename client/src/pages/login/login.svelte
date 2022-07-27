@@ -22,9 +22,14 @@
     }else{
       console.log("Det er ikke de rigtige credentials");
     }
+  };
 
-  }
+  async function cancel(){
+      navigate("/", {replace : true });
+  };
+
 </script>
+
 <form class="login-form" method="post">
     <div class="imgcontainer">
       <img src="img/logo.png" alt="Avatar" class="avatar">
@@ -37,9 +42,9 @@
   
       <label for="psw"><b>Password</b></label>
       <input type="password" placeholder="Enter Password" name="psw" required bind:value={user.password}>
-  
-      <button type="login" on:click={login}>Login</button>
-      <span class=cancelbtn> <a href="/">Cancel</a></span>
+
+      <button class="loginbtn" on:click={login}>Login</button>
+      <button class="cancelbtn" on:click={cancel}>Cancel</button>
       <label>
         <input type="checkbox" checked="checked" name="remember" class="rememberme"> Remember me
       </label>
@@ -66,7 +71,7 @@ input[type=text], input[type=password] {
   font-family: sans-serif;
 }
 
-button {
+.loginbtn {
   background-color: #04AA6D;
   color: white;
   padding: 14px 20px;
@@ -81,10 +86,13 @@ button:hover {
 }
 
 .cancelbtn {
-  background-color: #f44336;
-  width: auto;
-  padding: 10px 18px;
-  appearance: button;
+  background-color: #d41919;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
 }
 
 .cancelbtn:hover{
