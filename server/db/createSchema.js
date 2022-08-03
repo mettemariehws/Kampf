@@ -14,9 +14,5 @@ await db.exec(`CREATE TABLE IF NOT EXISTS users (
     role VARCHAR(10)
 );`);
 
-if (isInDeleteMode){
-await db.run(`INSERT INTO users (no, name, password, role) VALUES (69,'Mette','Vuf123','trainer')`); 
-}
-
 db.close();
 

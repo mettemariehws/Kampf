@@ -12,7 +12,7 @@ router.post("/api/add-player", async (req, res) => {
 
     const cryptPass = await bcrypt.hash(password, saltRounds);
 
-    const {newPlayer} = await db.run(`INSERT INTO users (no, name, password, role) VALUES (?,?,?,?)`, [no, name, cryptPass, role]);
+    await db.run(`INSERT INTO users (no, name, password, role) VALUES (?,?,?,?)`, [no, name, cryptPass, role]);
 
     if(res.status == 200){
         res.send("woop woop - created")

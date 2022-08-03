@@ -1,18 +1,16 @@
 <script>
     import { useNavigate, useLocation } from "svelte-navigator";
-    //import { user } from "../../store/writableStore";
 
     let user = localStorage.getItem("user");
     const navigate = useNavigate();
     const location = useLocation();
   
-    if (!user) {
+      if (!user) {
       navigate("/login", {
         state: { from: $location.pathname },
         replace: true,
       });
     }
-
 
   </script>
   

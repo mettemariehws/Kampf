@@ -3,26 +3,32 @@
   const navigate = useNavigate();
 
   let user = {};
-  let responseMessage = {}; 
 
   async function login(){
-    console.log(user)
-    const info = await fetch("http://localhost:3000/api/login", {
+    const info = await fetch("/api/login", {
       headers: {
-        "content-type": "application/json",
+        "content-type": "application/json"
       },
       method: "POST",
-      body: JSON.stringify(user),
+      body: JSON.stringify({user})
     });
 
-    responseMessage = await info.json();
-    if(info.status === 200){
-      localStorage.setItem("user", responseMessage.loginUser);
-      navigate("/userprofile", {replace : true});
+    const loginUser = await info.json();
+
+    if(info.ok){
+      localStorage.setItem("user", JSON.stringify(loginUser.loginUser));
+        if(loginUser.loginUser.role === "admin"){
+          console.log("Testii 1")
+          navigate("/admin", {replace : true});
+          console.log("Testii 3")
+          return
+        }else
+        console.log("Testii 2")
+        navigate("/userprofile", {replace : true });
+        return 
     }else{
       console.log("Det er ikke de rigtige credentials");
-    }
-  };
+    }};
 
   async function cancel(){
       navigate("/", {replace : true });
@@ -43,11 +49,8 @@
       <label for="psw"><b>Password</b></label>
       <input type="password" placeholder="Enter Password" name="psw" required bind:value={user.password}>
 
-      <button class="loginbtn" on:click={login}>Login</button>
+      <button class="loginbtn" on:click|preventDefault={login}>Login</button>
       <button class="cancelbtn" on:click={cancel}>Cancel</button>
-      <label>
-        <input type="checkbox" checked="checked" name="remember" class="rememberme"> Remember me
-      </label>
     </div>
   </form>
 

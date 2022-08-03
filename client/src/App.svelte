@@ -1,19 +1,20 @@
 <script>
-  import { Router, Route, Link } from "svelte-navigator";
+  import { Router, Route, Link} from "svelte-navigator";
   import Login from "./pages/login/login.svelte";
   import Addplayer from "./pages/addplayers/addplayer.svelte";
   import Userprofile from "./pages/userprofile/userprofile.svelte";
   import Gameoverview from "./pages/gameoverview/gameoverview.svelte";
-  import { user } from "./store/writableStore";
+  import Admin from "./pages/admin/admin.svelte";
   import PrivateRoute from "../src/pages/privaterouting/privateRouting.svelte";
+  import AdminRoute from "./pages/privaterouting/adminRouting.svelte"
+  
+  //const navigate = useNavigate();
 
   import RouteComponent from "./pages/login/login.svelte";
+import AdminRouteGuard from "./pages/privaterouting/adminRouteGuard.svelte";
 
-  async function logout() {
-    const res = await fetch("/api/logout");
-    navigate("/", { replace: true });
-    $user = null;
-  }
+
+
 </script>
 
 <main>
@@ -28,30 +29,35 @@
             <Link to="/frontpage">Game Overview</Link>
           </li>
           <li>
-            <Link to="/userprofile">Profile</Link>
+            <Link to="/login">Profile</Link>
           </li>
           <li>
             <Link to="/frontpage">Add player</Link>
           </li>
           <li>
-            <!--<a class="services" href="services.html">Logout</a>-->
-            <button type="logout-button" on:click={() => logout()} />
+            <!--<button type="logoutbtn" on:click={logout}>Log out</button>-->
           </li>
         </ul>
       </div>
     </div>
 
     <Route path="/" component={Gameoverview} />
-    <Route path="/login" component={Login}> 
-      
-      <RouteComponent/> 
-    </Route> />
+    <Route path="/admin" component={Admin} />
     <Route path="/add-player" component={Addplayer} />
+    <Route path="/login" component={Login}> 
+    <RouteComponent/> 
+    </Route>
 
     <PrivateRoute path="/userprofile">
       <Userprofile />
     </PrivateRoute>
+  
+    <AdminRoute path="/admin">
+      <Admin/>
+    </AdminRoute>
+
   </Router>
+
 </main>
 
 <style>

@@ -10,7 +10,7 @@
 			<div>
 				<div>
 					<div>
-						<h1>&#8220;This template is FREE&#8221;.</h1>
+						<h1>&#8220;Her kan du se &#8221;.</h1>
 						<p>
 							This website template has been designed by Free Website Templates for you, for free. You can replace all this text with your own text. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi
 						</p>

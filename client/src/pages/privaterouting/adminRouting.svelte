@@ -1,14 +1,14 @@
 <script>
     import { Route } from "svelte-navigator";
-    import PrivateRouteGuard from "./privateRouteGuard.svelte";
+    import AdminRouteGuard from "./adminRouteGuard.svelte";
   
     export let path;
 
   </script>
   
   <Route {path} let:params let:location let:navigate>
-    <PrivateRouteGuard>
+    <AdminRouteGuard>
       <slot {params} {location} {navigate} />
-    </PrivateRouteGuard>
+    </AdminRouteGuard>
   </Route>
   

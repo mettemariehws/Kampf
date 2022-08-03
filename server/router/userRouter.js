@@ -1,15 +1,11 @@
 import db from "../db/createConnection.js";
 import {Router} from "express";
-import bcrypt, { compare } from "bcrypt";
-import session from "express-session";
+import bcrypt from "bcrypt";
 
 const router = Router();
-const saltRounds = 12;
-let sess;
-
 
 router.post("/api/login", async (req, res) => {
-    const {no, password} = req.body;  
+    const {no, password} = req.body.user;  
 
     try{
     let loginUser = await db.get(`SELECT * FROM users WHERE no = ?`, [no]); 
@@ -18,28 +14,26 @@ router.post("/api/login", async (req, res) => {
     if(compPass && !req.session.loggedIn){
         req.session.loggedIn = true; 
         req.session.no = no;
-        return res.json({loginUser});
+        res.send({loginUser});
+        return 
     }
     else if(req.session.loggedIn){
-        return res.send("You are already in!")
-    }
+        res.send("You are already in!")
+        return
+    } 
         res.status(401);
         res.send("Unauthorized :-(")
     
     }catch{
         console.log("not found hiih")
-        return res.status(404)
+        res.status(404)
     }
 });
 
 router.get("/api/logout", (req, res) => {
-    if (req.session.loggedIn) {
       req.session.loggedIn = false;
-      req.session.username = null;
-      return res.send("Logged out");
-    }
-  
-    res.send("You're not logged in");
+      res.send("Logged out");
+      return
   });
 
 export default router;
