@@ -13,17 +13,14 @@
       body: JSON.stringify({user})
     });
 
-    const loginUser = await info.json();
+    const responsemessage = await info.json();
 
-    if(info.ok){
-      localStorage.setItem("user", JSON.stringify(loginUser.loginUser));
-        if(loginUser.loginUser.role === "admin"){
-          console.log("Testii 1")
+    if(info.ok ){
+      localStorage.setItem("user", JSON.stringify(responsemessage));
+        if(responsemessage.loginUser.role === "admin"){
           navigate("/admin", {replace : true});
-          console.log("Testii 3")
           return
         }else
-        console.log("Testii 2")
         navigate("/userprofile", {replace : true });
         return 
     }else{

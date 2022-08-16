@@ -1,6 +1,12 @@
 
 <script>
-	import {Router,Link} from "svelte-navigator";
+	
+	allGames = [];
+
+	async function allGames(){
+    	const allGames = await fetch("/api/all-games");
+      	return allGames.json();
+    }
 
 </script>
 
@@ -10,45 +16,32 @@
 			<div>
 				<div>
 					<div>
-						<h1>&#8220;Her kan du se &#8221;.</h1>
+						<h1>&#8220;Her kan du se oversigten over kampe i klubben &#8221;.</h1>
 						<p>
-							This website template has been designed by Free Website Templates for you, for free. You can replace all this text with your own text. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi
+							Vi er en lille klub, men det betyder ikke vi skal gå ned på 
 						</p>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div id="section">
-			<ul>
-				<li>
-					<a href="blog.html"><img src="images/dog2.jpg" alt="Image"></a>
-					<div>
-						<p>
-							This website template has been designed by Free Website Templates for you, for free. You can replace all this text with your own text. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud
-						</p>
-						<a href="blog.html" class="readmore">Read more &gt;&gt;</a>
-					</div>
-				</li>
-				<li>
-					<a href="blog.html"><img src="images/dog2.jpg" alt="Image"></a>
-					<div>
-						<p>
-							This website template has been designed by Free Website Templates for you, for free. You can replace all this text with your own text. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud
-						</p>
-						<a href="blog.html" class="readmore">Read more &gt;&gt;</a>
-					</div>
-				</li>
-				<li>
-					<a href="blog.html"><img src="images/dog2.jpg" alt="Image"></a>
-					<div>
-						<p>
-							This website template has been designed by Free Website Templates for you, for free. You can replace all this text with your own text. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud
-						</p>
-						<a href="blog.html" class="readmore">Read more &gt;&gt;</a>
-					</div>
-				</li>
-			</ul>
-		</div>
+		<table id="section">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Opponent</th>
+					<th>Place</th>
+					<th>Date</th>
+				</tr>
+			</thead>
+				<tbody>
+					{#each allGames as game};
+					<td>{game.id}</td>
+					<td>{game.opponent}</td>
+					<td>{game.place}</td>
+					<td>{game.date}</td>
+					{/each}
+				</tbody>
+		</table>
 	</div>
 	<div id="footer">
 		<ul>

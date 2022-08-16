@@ -14,5 +14,17 @@ await db.exec(`CREATE TABLE IF NOT EXISTS users (
     role VARCHAR(10)
 );`);
 
+await db.exec(`CREATE TABLE IF NOT EXISTS games (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    date VARCHAR(100),
+    opponent VARCHAR(100),
+    time VARCHAR(100),
+    place VARCHAR(100)
+);`);
+
+await db.run(
+    `INSERT INTO games (date, opponent, time, place) VALUES ('02.11.2022', 'Sundby', '18.00.00', 'Sundby idrætspark')`
+);
+
 db.close();
 

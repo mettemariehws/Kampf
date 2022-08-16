@@ -26,13 +26,13 @@ import AdminRouteGuard from "./pages/privaterouting/adminRouteGuard.svelte";
         </div>
         <ul>
           <li class="current">
-            <Link to="/frontpage">Game Overview</Link>
+            <Link to="/">Game Overview</Link>
           </li>
           <li>
             <Link to="/login">Profile</Link>
           </li>
           <li>
-            <Link to="/frontpage">Add player</Link>
+            <Link to="/add-player">Add player</Link>
           </li>
           <li>
             <!--<button type="logoutbtn" on:click={logout}>Log out</button>-->
