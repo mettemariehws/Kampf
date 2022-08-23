@@ -5,6 +5,7 @@
   let user = {};
 
   async function login(){
+
     const info = await fetch("/api/login", {
       headers: {
         "content-type": "application/json"
@@ -13,11 +14,11 @@
       body: JSON.stringify({user})
     });
 
-    const responsemessage = await info.json();
+    const loginUser = await info.json();
 
-    if(info.ok ){
-      localStorage.setItem("user", JSON.stringify(responsemessage));
-        if(responsemessage.loginUser.role === "admin"){
+    if(info.ok){
+      localStorage.setItem("user", JSON.stringify(loginUser.loginUser));
+        if(loginUser.loginUser.role === "admin"){
           navigate("/admin", {replace : true});
           return
         }else

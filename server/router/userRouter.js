@@ -4,6 +4,12 @@ import bcrypt from "bcrypt";
 
 const router = Router();
 
+router.get("/api/logout", (req, res) => {
+    req.session.loggedIn = false;
+    res.send("Logged out");
+    return
+});
+
 router.post("/api/login", async (req, res) => {
     const {no, password} = req.body.user;  
 
@@ -29,11 +35,5 @@ router.post("/api/login", async (req, res) => {
         res.status(404)
     }
 });
-
-router.get("/api/logout", (req, res) => {
-      req.session.loggedIn = false;
-      res.send("Logged out");
-      return
-  });
 
 export default router;

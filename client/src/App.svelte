@@ -1,18 +1,24 @@
 <script>
-  import { Router, Route, Link} from "svelte-navigator";
+  import { Router, Route, Link } from "svelte-navigator";
   import Login from "./pages/login/login.svelte";
   import Addplayer from "./pages/addplayers/addplayer.svelte";
   import Userprofile from "./pages/userprofile/userprofile.svelte";
   import Gameoverview from "./pages/gameoverview/gameoverview.svelte";
   import Admin from "./pages/admin/admin.svelte";
   import PrivateRoute from "../src/pages/privaterouting/privateRouting.svelte";
-  import AdminRoute from "./pages/privaterouting/adminRouting.svelte"
-  
-  //const navigate = useNavigate();
+  import AdminRoute from "./pages/privaterouting/adminRouting.svelte";
+  import { SvelteToast } from "@zerodevx/svelte-toast";
 
   import RouteComponent from "./pages/login/login.svelte";
-import AdminRouteGuard from "./pages/privaterouting/adminRouteGuard.svelte";
 
+  const options = {
+    theme: {
+      "--toastBackground": "#48BB78",
+      "--toastBarBackground": "#2F855A",
+      reversed: true,
+      intro: { y: 192 },
+    },
+  };
 
 
 </script>
@@ -34,9 +40,6 @@ import AdminRouteGuard from "./pages/privaterouting/adminRouteGuard.svelte";
           <li>
             <Link to="/add-player">Add player</Link>
           </li>
-          <li>
-            <!--<button type="logoutbtn" on:click={logout}>Log out</button>-->
-          </li>
         </ul>
       </div>
     </div>
@@ -47,6 +50,7 @@ import AdminRouteGuard from "./pages/privaterouting/adminRouteGuard.svelte";
     <Route path="/login" component={Login}> 
     <RouteComponent/> 
     </Route>
+    <SvelteToast {options}/>
 
     <PrivateRoute path="/userprofile">
       <Userprofile />

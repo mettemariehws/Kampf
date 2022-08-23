@@ -1,83 +1,141 @@
 <script>
+  import { toast } from "@zerodevx/svelte-toast";
 
+  let newPlayer = {};
 
+  async function clearFields() {
+    document.getElementById("playerno").value = "";
+    document.getElementById("name").value = "";
+    document.getElementById("role").value = "";
+    document.getElementById("pws").value = "";
+  }
+
+  async function addPlayer() {
+    const res = await fetch("/api/add-player", {
+      headers: {
+        "content-type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify(newPlayer),
+    });
+
+    if (res.status === 200) {
+      clearFields();
+      toast.push(
+        "The player is now added and will recieve an email with information"
+      );
+      return;
+    } else {
+      console.log("error");
+      toast.push("Something went worng - try again", {
+        theme: {
+          "--toastBackground": "#F56565",
+          "--toastBarBackground": "#C53030",
+        },
+      });
+    }
+  }
 </script>
 
-<form action="action_page.php">
-    <div class="container">
-      <h1>Register</h1>
-      <p>Please fill in this form to create an account.</p>
-      <hr>
-  
-      <label for="playerno"><b>Player number</b></label>
-      <input type="text" placeholder="Enter number" name="playerno" id="playerno" required>
+<form id="addPlayer">
+  <div class="container">
+    <h1>Register a new player at the club</h1>
+    <p>Please fill in this form to add a new player</p>
+    <hr />
 
-      <label for="name"><b>Name</b></label>
-      <input type="text" placeholder="Enter name" name="name" id="name" required>
+    <label for="playerno"><b>Player number</b></label>
+    <input
+      type="text"
+      placeholder="Enter number"
+      name="playerno"
+      id="playerno"
+      bind:value={newPlayer.no}
+      required
+    />
 
-      <label for="role"><b>Role</b></label>
-      <input type="text" placeholder="Enter what role the player need to have on the page" name="role" id="role" required>
-  
-      <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
-  
-      <label for="psw-repeat"><b>Repeat Password</b></label>
-      <input type="password" placeholder="Repeat Password" name="psw-repeat" id="psw-repeat" required>
-      <hr>
-  
-      <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
-      <button type="submit" class="registerbtn">Register</button>
-    </div>
-  </form>
+    <label for="name"><b>Name</b></label>
+    <input
+      type="text"
+      placeholder="Enter name"
+      name="name"
+      id="name"
+      bind:value={newPlayer.name}
+      required
+    />
+
+    <label for="role"><b>Role</b></label>
+    <input
+      type="text"
+      placeholder="Enter what role the player need to have on the page"
+      name="role"
+      id="role"
+      bind:value={newPlayer.role}
+      required
+    />
+
+    <label for="psw"><b>Password</b></label>
+    <input
+      type="password"
+      placeholder="Enter Password"
+      name="psw"
+      id="psw"
+      bind:value={newPlayer.password}
+      required
+    />
+    <button
+      type="submit"
+      class="registerbtn"
+      on:click|preventDefault={addPlayer}>Register</button
+    >
+  </div>
+</form>
 
 <style>
+  * {
+    box-sizing: border-box;
+  }
 
-* {box-sizing: border-box}
+  /* Add padding to containers */
+  .container {
+    padding: 16px;
+  }
 
-/* Add padding to containers */
-.container {
-  padding: 16px;
-}
+  /* Full-width input fields */
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+  }
 
-/* Full-width input fields */
-input[type=text], input[type=password] {
-  width: 100%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
-  display: inline-block;
-  border: none;
-  background: #f1f1f1;
-}
+  input[type="text"]:focus,
+  input[type="password"]:focus {
+    background-color: #ddd;
+    outline: none;
+  }
 
-input[type=text]:focus, input[type=password]:focus {
-  background-color: #ddd;
-  outline: none;
-}
+  /* Overwrite default styles of hr */
+  hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+  }
 
-/* Overwrite default styles of hr */
-hr {
-  border: 1px solid #f1f1f1;
-  margin-bottom: 25px;
-}
+  /* Set a style for the submit/register button */
+  .registerbtn {
+    background-color: #04aa6d;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+  }
 
-/* Set a style for the submit/register button */
-.registerbtn {
-  background-color: #04AA6D;
-  color: white;
-  padding: 16px 20px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  opacity: 0.9;
-}
-
-.registerbtn:hover {
-  opacity:1;
-}
-
-/* Add a blue text color to links */
-a {
-  color: dodgerblue;
-}
+  .registerbtn:hover {
+    opacity: 1;
+  }
 </style>

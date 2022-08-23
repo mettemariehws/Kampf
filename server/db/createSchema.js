@@ -19,11 +19,12 @@ await db.exec(`CREATE TABLE IF NOT EXISTS games (
     date VARCHAR(100),
     opponent VARCHAR(100),
     time VARCHAR(100),
-    place VARCHAR(100)
+    place VARCHAR(100),
+    attendees INT(16)
 );`);
 
 await db.run(
-    `INSERT INTO games (date, opponent, time, place) VALUES ('02.11.2022', 'Sundby', '18.00.00', 'Sundby idrætspark')`
+    `INSERT INTO games (date, opponent, time, place, attendees) VALUES ('02.11.2022', 'Sundby', '18.00.00', 'Sundby idrætspark', 12)`
 );
 
 db.close();
