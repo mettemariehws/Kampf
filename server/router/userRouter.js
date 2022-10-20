@@ -20,7 +20,7 @@ router.post("/api/login", async (req, res) => {
     if(compPass && !req.session.loggedIn){
         req.session.loggedIn = true; 
         req.session.no = no;
-        res.send({loginUser});
+        res.json({loginUser});
         return 
     }
     else if(req.session.loggedIn){

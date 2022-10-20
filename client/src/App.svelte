@@ -20,7 +20,6 @@
     },
   };
 
-
 </script>
 
 <main>
@@ -32,13 +31,13 @@
         </div>
         <ul>
           <li class="current">
-            <Link to="/">Game Overview</Link>
+            <a href="/">Game Overview</a>
           </li>
           <li>
-            <Link to="/login">Profile</Link>
+            <a href="/userprofile">Profile</a>
           </li>
           <li>
-            <Link to="/add-player">Add player</Link>
+            <a href="/add-player">Add player</a>
           </li>
         </ul>
       </div>
@@ -126,4 +125,8 @@
     position: relative;
     width: 235px;
   }
+  a {
+  color: white; 
+}
+
 </style>

@@ -1,17 +1,21 @@
 <script>
-  import { useNavigate } from "svelte-navigator";
+  import { useNavigate, useResolvable } from "svelte-navigator";
   import { onMount } from "svelte";
   import { io } from "socket.io-client";
 
   $: allGames = [];
   let navigate = useNavigate();
+  let loggedInUser; 
 
   const socket = io("http://localhost:3000");
 
   onMount(async () => {
     allGames = await getGames();
+    loggedInUser = JSON.parse(localStorage.getItem("user"));
+    console.log(allGames)
     socket.connect();
     //socket.emit("connection", {message:"tester"})
+    
   });
 
   async function getGames() {
@@ -19,14 +23,15 @@
     return res.json();
   }
 
-  async function updateAttendees(id, change) {
+  async function updateAttendees(gameId) {
+    //const user = JSON.parse(localStorage.getItem("user"));
     const info = await fetch("/api/update-attendee", {
       headers: {
         "content-type": "application/json",
       },
-      method: "PUT",
-      body: JSON.stringify({ id: id, change: change }),
-    });
+      method: "POST",
+      body: JSON.stringify({ gameId: gameId, userId: loggedInUser.id}),
+    })
 
     if(info.ok){
       socket.emit("change", {data:"random"});
@@ -35,8 +40,24 @@
     }
   };
 
+  //det er fint med to funktioner fordi den ene er en post og den anden er en delete bam!!!
+  async function deleteAttendees(gameId){
+      const info = await fetch("/api/delete-attendee", {
+        headers: {
+        "content-type": "application/json",
+      },
+      method: "DELETE",
+      body: JSON.stringify({ gameId: gameId, userId: loggedInUser.id}),
+      })
+
+      if(info.ok){
+      socket.emit("change", {data:"random"});
+    }else{
+      console.log("Not ok")
+    }
+  };
+
   socket.on("update", async (data) => {
-    console.log("message got back")
     allGames = await getGames();
   });
 
@@ -55,7 +76,7 @@
 
   <div class="container">
     <label for="playerno"><b>Player number</b></label>
-    <input type="text" placeholder="30" name="playerno" id="playerno" />
+    <input type="text" placeholder="39" name="playerno" id="playerno" />
 
     <label for="name"><b>Name</b></label>
     <input type="text" placeholder="Patrick" name="name" id="name" />
@@ -66,7 +87,7 @@
     <!--<button type="addEdit" class="editbtn" on:click|preventDefault={saveChanges}
       >Save changes</button>-->
 
-    <button type="logoutbtn" class="logoutbtn" on:click={logout}>Log out</button
+    <button type="logoutbtn" class="logoutbtn" on:click|preventDefault={logout}>Log out</button
     >
   </div>
 </form>
@@ -90,21 +111,24 @@
           <td>{game.place}</td>
           <td>{game.time}</td>
           <td>{game.date}</td>
-          <td>{game.attendees}</td>
+          <td>{game.users.length}</td>
           <td>
             <div class="button-container">
+              {#if !game.users.find(player => player.userId === loggedInUser.id)}
               <button
                 class="readybtn"
-                on:click={updateAttendees(game.id, "+1")}
+                on:click={updateAttendees(game.id)}
               >
                 Playable</button
               >
+              {:else}
               <button
                 class="unreadybtn"
-                on:click={updateAttendees(game.id, "-1")}
+                on:click={deleteAttendees(game.id)}
               >
                 Unplayable</button
               >
+              {/if}
             </div>
           </td>
         </tr>
@@ -242,6 +266,15 @@
   h3 {
     text-align: center;
   }
+
+  .readybtn{
+    color: green;
+  }
+
+  .unreadybtn{
+    color: red;
+  }
+
   #footer {
     margin: 0 auto;
     min-height: 85px;

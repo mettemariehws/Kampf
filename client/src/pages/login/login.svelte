@@ -1,8 +1,19 @@
 <script>
-  import { useNavigate } from "svelte-navigator";
+  import {onMount} from "svelte";
+  import { useNavigate, useLocation } from "svelte-navigator";
   const navigate = useNavigate();
+  const location = useLocation();
 
   let user = {};
+
+  onMount(() => {
+    const loggedInUser = localStorage.getItem("user");
+    
+    if (loggedInUser) {
+    navigate("/userprofile", {
+      state: { from: $location.pathname },
+      replace: true,})
+    }});
 
   async function login(){
 

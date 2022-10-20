@@ -14,14 +14,13 @@ function init(app){
 
     //oprette connection - et hul i mellem frontend og backend 
   io.on("connection", (socket) => {
-    let test = socket.handshake.auth.message
+    //let test = socket.handshake.auth.message
 
     socket.on("change", (data) => {
       socket.emit("update", data)
       socket.broadcast.emit("update", data)
     });
   });
-
     return server;
 }
 

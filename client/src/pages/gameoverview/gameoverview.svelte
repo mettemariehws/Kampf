@@ -12,6 +12,7 @@
     const res = await fetch("/api/all-games");
     return res.json();
   }
+
 </script>
 
 <body>
