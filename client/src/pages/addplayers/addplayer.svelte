@@ -2,12 +2,14 @@
   import { toast } from "@zerodevx/svelte-toast";
 
   let newPlayer = {};
+  const val = null; 
 
   async function clearFields() {
     document.getElementById("playerno").value = "";
     document.getElementById("name").value = "";
+    document.getElementById("email").value = "";
     document.getElementById("role").value = "";
-    document.getElementById("pws").value = "";
+    document.getElementById("password").value = val;
   }
 
   async function addPlayer() {
@@ -18,6 +20,8 @@
       method: "POST",
       body: JSON.stringify(newPlayer),
     });
+
+    console.log(newPlayer)
 
     if (res.status === 200) {
       clearFields();
@@ -63,22 +67,28 @@
       required
     />
 
-    <label for="role"><b>Role</b></label>
+    <label for="email"><b>Email</b></label>
     <input
       type="text"
-      placeholder="Enter what role the player need to have on the page"
-      name="role"
-      id="role"
-      bind:value={newPlayer.role}
+      placeholder="Enter email"
+      name="email"
+      id="email"
+      bind:value={newPlayer.email}
       required
     />
+
+    <label for="role"><b>Role</b></label>
+    <select name="role" id="role" bind:value={newPlayer.role}>
+      <option value="player">Player</option>
+      <option value="admin">Admin</option>
+    </select>
 
     <label for="psw"><b>Password</b></label>
     <input
       type="password"
       placeholder="Enter Password"
       name="psw"
-      id="psw"
+      id="password"
       bind:value={newPlayer.password}
       required
     />
@@ -115,6 +125,15 @@
   input[type="password"]:focus {
     background-color: #ddd;
     outline: none;
+  }
+
+  select{
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
   }
 
   /* Overwrite default styles of hr */

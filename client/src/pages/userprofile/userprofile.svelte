@@ -1,30 +1,63 @@
 <script>
-  import { useNavigate, useResolvable } from "svelte-navigator";
+  //import { useNavigate } from "svelte-navigator";
   import { onMount } from "svelte";
   import { io } from "socket.io-client";
+  import { toast } from "@zerodevx/svelte-toast";
 
   $: allGames = [];
-  let navigate = useNavigate();
-  let loggedInUser; 
+  //let navigate = useNavigate();
+  let updatedPlayer = {};
+  let loggedInUser = {};
+
 
   const socket = io("http://localhost:3000");
 
   onMount(async () => {
     allGames = await getGames();
     loggedInUser = JSON.parse(localStorage.getItem("user"));
-    console.log(allGames)
+    fillInformation();
     socket.connect();
     //socket.emit("connection", {message:"tester"})
     
   });
+
+  async function fillInformation(){
+    document.getElementById("playerno").value = loggedInUser.no;
+    document.getElementById("name").value = loggedInUser.name;
+    document.getElementById("email").value = loggedInUser.email;
+  };
 
   async function getGames() {
     const res = await fetch("/api/all-games");
     return res.json();
   }
 
+  async function updatePlayer(){
+    const res = await fetch("/api/update-player", {
+      headers: {
+        "content-type": "application/json",
+      },
+      method: "PUT",
+      body: JSON.stringify({ id: loggedInUser.id, no: updatedPlayer.no, name: updatedPlayer.name, email: updatedPlayer.email}),
+    });
+
+    if (res.status === 200) {
+      toast.push(
+        "Your new information is now saved!"
+      );
+      return;
+    } else {
+      console.log("error");
+      toast.push("Something went wrong - try again", {
+        theme: {
+          "--toastBackground": "#F56565",
+          "--toastBarBackground": "#C53030",
+        },
+      });
+    }
+  }
+
   async function updateAttendees(gameId) {
-    //const user = JSON.parse(localStorage.getItem("user"));
     const info = await fetch("/api/update-attendee", {
       headers: {
         "content-type": "application/json",
@@ -71,24 +104,23 @@
 <form class="login-form" method="post">
   <div class="imgcontainer">
     <img src="img/user.png" alt="Avatar" class="avatar" />
-    <h2 class="welcometext">Welcome to your player profile</h2>
+    <h2 class="welcometext">Welcome to your player profile!</h2>
   </div>
 
   <div class="container">
     <label for="playerno"><b>Player number</b></label>
-    <input type="text" placeholder="39" name="playerno" id="playerno" />
+    <input type="text" placeholder="Player no" name="playerno" id="playerno" bind:value={updatedPlayer.no} required />
 
     <label for="name"><b>Name</b></label>
-    <input type="text" placeholder="Patrick" name="name" id="name" />
+    <input type="text" placeholder="Name" name="name" id="name" bind:value={updatedPlayer.name} required/>
 
-    <label for="role"><b>Role</b></label>
-    <input type="text" placeholder="Player" name="role" id="role" />
+    <label for="Email"><b>Email</b></label>
+    <input type="text" placeholder="Email" name="email" id="email" bind:value={updatedPlayer.email} required/>
 
-    <!--<button type="addEdit" class="editbtn" on:click|preventDefault={saveChanges}
-      >Save changes</button>-->
+    <button type="updatePlayer" class="editbtn" on:click|preventDefault={updatePlayer}
+      >Save changes</button>
 
-    <button type="logoutbtn" class="logoutbtn" on:click|preventDefault={logout}>Log out</button
-    >
+    <button type="logoutbtn" class="logoutbtn" on:click|preventDefault={logout}>Log out</button>
   </div>
 </form>
 
@@ -139,7 +171,7 @@
 <div id="footer">
   <ul>
     <li>
-      <a href="index.html">Home</a>
+      <a href="/">Home</a>
     </li>
     <li>
       <a href="about.html">About</a>

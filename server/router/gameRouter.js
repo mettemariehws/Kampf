@@ -8,7 +8,6 @@ router.get("/api/all-games", async (req, res) => {
   for(let game of games){
     game.users = await db.all(`SELECT * FROM playerGameRelation AS p WHERE p.gameId = ${game.id}`
     )};
-  console.log(games)
   res.send(games);
 });
 
@@ -40,7 +39,7 @@ router.delete("/api/delete-attendee", async(req, res) => {
 
   try{
     await db.run ( 
-      `DELETE FROM playerGameRelation AS p WHERE p.gameId = ${gameId}  AND p.userId = ${userId}`
+      `DELETE FROM playerGameRelation AS p WHERE p.gameId = ${gameId} AND p.userId = ${userId}`
     );
     res.status(200).send();
   } catch {

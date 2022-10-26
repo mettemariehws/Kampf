@@ -10,6 +10,7 @@ await db.exec(`CREATE TABLE IF NOT EXISTS users (
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     no INT(16),
     name VARCHAR(30),
+    email VARCHAR(40),
     password VARCHAR(30),
     role VARCHAR(10)
 );`);

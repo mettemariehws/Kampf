@@ -7,9 +7,12 @@
   import Admin from "./pages/admin/admin.svelte";
   import PrivateRoute from "../src/pages/privaterouting/privateRouting.svelte";
   import AdminRoute from "./pages/privaterouting/adminRouting.svelte";
+  import { onMount } from "svelte";
   import { SvelteToast } from "@zerodevx/svelte-toast";
 
   import RouteComponent from "./pages/login/login.svelte";
+
+  let loggedInUser = JSON.parse(localStorage.getItem("user"));
 
   const options = {
     theme: {
@@ -19,6 +22,11 @@
       intro: { y: 192 },
     },
   };
+
+  /*onMount(async () => {
+    loggedInUser = JSON.parse(localStorage.getItem("user"));
+    console.log(loggedInUser)
+  });*/
 
 </script>
 
@@ -36,9 +44,11 @@
           <li>
             <a href="/userprofile">Profile</a>
           </li>
+          {#if loggedInUser !== true}
           <li>
             <a href="/add-player">Add player</a>
           </li>
+          {/if}
         </ul>
       </div>
     </div>
