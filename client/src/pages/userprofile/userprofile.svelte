@@ -1,11 +1,11 @@
 <script>
-  //import { useNavigate } from "svelte-navigator";
+  import { useNavigate } from "svelte-navigator";
   import { onMount } from "svelte";
   import { io } from "socket.io-client";
   import { toast } from "@zerodevx/svelte-toast";
 
   $: allGames = [];
-  //let navigate = useNavigate();
+  let navigate = useNavigate();
   let updatedPlayer = {};
   let loggedInUser = {};
 
@@ -28,12 +28,12 @@
   };
 
   async function getGames() {
-    const res = await fetch("/api/all-games");
-    return res.json();
+    const info = await fetch("/api/all-games");
+    return info.json();
   }
 
   async function updatePlayer(){
-    const res = await fetch("/api/update-player", {
+    const info = await fetch("/api/update-player", {
       headers: {
         "content-type": "application/json",
       },
@@ -41,7 +41,7 @@
       body: JSON.stringify({ id: loggedInUser.id, no: updatedPlayer.no, name: updatedPlayer.name, email: updatedPlayer.email}),
     });
 
-    if (res.status === 200) {
+    if (info.status === 200) {
       toast.push(
         "Your new information is now saved!"
       );
@@ -300,11 +300,13 @@
   }
 
   .readybtn{
-    color: green;
+    background-color: green;
+    color: white;
   }
 
   .unreadybtn{
-    color: red;
+    background-color: red;
+    color: white;
   }
 
   #footer {

@@ -4,7 +4,7 @@ import db from "../db/createConnection.js";
 const router = Router();
 
 router.get("/api/all-games", async (req, res) => {
-  let games = await db.all(`SELECT * FROM games`)
+  let games = await db.all(`SELECT * FROM games`);
   for(let game of games){
     game.users = await db.all(`SELECT * FROM playerGameRelation AS p WHERE p.gameId = ${game.id}`
     )};
@@ -44,6 +44,7 @@ router.delete("/api/delete-attendee", async(req, res) => {
     res.status(200).send();
   } catch {
     res.status(400).send();
+    console.log("du nåede til backend")
   }
 });
 

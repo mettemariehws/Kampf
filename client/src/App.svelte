@@ -1,16 +1,15 @@
 <script>
   import { Router, Route, Link } from "svelte-navigator";
   import Login from "./pages/login/login.svelte";
-  import Addplayer from "./pages/addplayers/addplayer.svelte";
-  import Userprofile from "./pages/userprofile/userprofile.svelte";
-  import Gameoverview from "./pages/gameoverview/gameoverview.svelte";
-  import Admin from "./pages/admin/admin.svelte";
-  import PrivateRoute from "../src/pages/privaterouting/privateRouting.svelte";
-  import AdminRoute from "./pages/privaterouting/adminRouting.svelte";
-  import { onMount } from "svelte";
+  import Addplayer from "./pages/addplayers/Addplayer.svelte";
+  import Userprofile from "./pages/userprofile/Userprofile.svelte";
+  import Gameoverview from "./pages/gameoverview/Gameoverview.svelte";
+  import Admin from "./pages/admin/Admin.svelte";
+  import PrivateRoute from "../src/pages/privaterouting/PrivateRouting.svelte";
+  import AdminRoute from "./pages/privaterouting/AdminRouting.svelte";
   import { SvelteToast } from "@zerodevx/svelte-toast";
 
-  import RouteComponent from "./pages/login/login.svelte";
+  import RouteComponent from "./pages/login/Login.svelte";
 
   let loggedInUser = JSON.parse(localStorage.getItem("user"));
 
@@ -22,11 +21,6 @@
       intro: { y: 192 },
     },
   };
-
-  /*onMount(async () => {
-    loggedInUser = JSON.parse(localStorage.getItem("user"));
-    console.log(loggedInUser)
-  });*/
 
 </script>
 

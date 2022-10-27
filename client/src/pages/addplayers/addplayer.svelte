@@ -21,8 +21,6 @@
       body: JSON.stringify(newPlayer),
     });
 
-    console.log(newPlayer)
-
     if (res.status === 200) {
       clearFields();
       toast.push(
