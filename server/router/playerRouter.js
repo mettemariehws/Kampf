@@ -29,11 +29,13 @@ router.post("/api/add-player", async (req, res) => {
 });
 
 router.put("/api/update-player", async (req, res) => {
-  const { no, name, email } = req.body;
-  const {id} = req.body.id;
-  
+  //const {id} = parseInt(req.body.id)
+  const {id, no, name, email} = req.body;
+
   try{
-    await db.run(`UPDATE users SET no = ${no}, name = ${name}, email = ${email} WHERE id = ${id}`);
+    console.log("du var her også")
+    await db.run(`UPDATE users SET no = $1, name = $2, email = $3 WHERE id = $4`,
+    [no, name, email, parseInt(id)]);
     res.status(200).send();
   }catch{
     res.status(400).send();

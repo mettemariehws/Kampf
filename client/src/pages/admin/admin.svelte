@@ -32,6 +32,10 @@
     }
 };
 
+socket.on("update", async (data) => {
+    allPlayers = await getAllPlayers();
+  });
+
     async function playerOverview(){
         console.log("her skal den redirecte")
     }
